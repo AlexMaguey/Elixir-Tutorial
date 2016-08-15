@@ -46,5 +46,5 @@ Sálvalo como `simple.exs` y ejecútalo con `elixir`:
 ```
 $ elixir simple.exs
 Hola mundo Elixir
-
+```
 Después aprenderemos cómo compilar código Elixir el Mix build tool. Por ahora, movámonos al [Capítulo 2](https//:github.com/alexmaguey).
