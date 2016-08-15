@@ -14,7 +14,7 @@ Si aún no has instalado Elixir, corre a nuestra [página de instalación](https
 
 ##Modo interactivo
 
-Cuando instalas Elixir, tendrás tres ejecutables nuevos `iex`, `elixir` y `elixirc`. Si compilaste Elixir desde la fuente o estas usando una versión empaquetada, puedes encontrar estos dentro del directorio `bin`.
+Cuando instalas Elixir, tendrás tres ejecutables nuevos `iex`, `elixir` y `elixirc`. Si compilaste Elixir desde la fuente o estás usando una versión empaquetada, puedes encontrar estos dentro del directorio `bin`.
 
 Por ahora, empecemos corriendo `iex` (o `iex.bat` si estas en Windows) que significa Interactive Elixir. En el modo interactivo podemos escribir cualquier expresión de Elixir y obtener su resultado. Calentemos con algunas expresiones básicas.
 
@@ -47,4 +47,4 @@ Sálvalo como `simple.exs` y ejecútalo con `elixir`:
 $ elixir simple.exs
 Hola mundo Elixir
 ```
-Después aprenderemos cómo compilar código Elixir el Mix build tool. Por ahora, movámonos al [Capítulo 2](https//:github.com/alexmaguey).
+Después aprenderemos cómo compilar código Elixir y cómo usar el Mix build tool. Por ahora, movámonos al [Capítulo 2](https://github.com/AlexMaguey/Elixir-Tutorial/blob/master/1-tipos-basicos.md).
