@@ -103,5 +103,4 @@ number < atom < reference < functions < port < pid < tuple < maps < list < bitst
 
 No es necesario memorizar el orden, pero es importante saber que un orden existe.
 
-##Tabla de Operadores
-
+En el siguiente capítulo, vamos a discutir algunas funciones básicas, conversión entre tipos de datos y un poco de flujos de control.
