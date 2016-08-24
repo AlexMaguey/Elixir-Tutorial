@@ -1,4 +1,4 @@
-En el [capítulo anterior](https://github.com/AlexMaguey/Elixir-Tutorial/blob/master/1-tipos-basicos.md), vimos que Elixir provee `+`, `-`, `*`, `/` como operadores aritméticos, más las funciones `div/2` y `rem/2` para la división entera y el resto.
+En el [capítulo anterior](https://github.com/AlexMaguey/Elixir-Tutorial/blob/master/2-tipos-basicos.md), vimos que Elixir provee `+`, `-`, `*`, `/` como operadores aritméticos, más las funciones `div/2` y `rem/2` para la división entera y el resto.
 
 Elixir también provee `++` y `--` para manipular listas:
 
