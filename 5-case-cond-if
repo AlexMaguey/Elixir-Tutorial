@@ -1,0 +1,213 @@
+#case, cond e if
+
+En éste capítulo aprenderemos acerca de las estructuras de control de flujo `case`, `cond` e `if`.
+
+##`case`
+
+`case` nos permite comparar un valor contra muchos patrones hasta que encontremos uno que coincida:
+
+```
+iex> case {1, 2, 3} do
+...>   {4, 5, 6} ->
+...>     "Ésta cláusula no conicidirá"
+...>   {1, x, 3} ->
+...>     "Ésta clásula coincidirá y enlazará x al 2 en ésta cláusula"
+...>   _ ->
+...>     "Ésta cláusula puede coincidir con cualquier valor"
+...> end
+"Ésta cláusula coincidirá y enlazara x al 2 en ésta cláusula"
+```
+
+Si quieres coincidir patrones contra una variable existente, tienes que usar el operador `^`:
+
+```
+iex> x = 1
+1
+iex> case 10 do
+...>   ^x -> "No coincidirá"
+...>   _  -> "Coincidirá"
+...> end
+"Coincidirá"
+```
+
+Las cláusulas también permiten condiciones extra para ser especificadas via guards:
+
+```
+iex> case {1, 2, 3} do
+...>   {1, x, 3} when x > 0 ->
+...>     "Coincidirá"
+...>   _ ->
+...>     "Puede coincidir, si la condición del guard no se satisface"
+...> end
+"Coincidirá"
+```
+
+La primer cláusula de arriba sólo coincidirá cuando `x` es positiva.
+
+#Expresiones en cláusulas guard
+
+Elixir importa y permite las siguientes expresiones en guards por defect:
+
+* Operadores de comparación (`==`, `!=`, `===`, `!==`, `>`, `>=`, `<`, `<=`)
+* Operadores booleanos (`and`, `or`, `not`)
+* Operadores aritméticos (`+`, `-`, `*`, `/`)
+* Operadores unarios aritméticos (`+`, `-`)
+* El operador de concatenación binario `<>`
+* El operador `in` siempre y cuando el lado derecho sea un rango o una lista
+* Todas las siguientes funciones para checar tipo:
+..* `is_atom/1`
+..* `is_binary/1`
+..* `is_bitstring/1`
+..* `is_boolean/1`
+..* `is_float/1`
+..* `is_function/1`
+..* `is_function/2`
+..* `is_integer/1`
+..* `is_list/1`
+..* `is_map/1`
+..* `is_nil/1`
+..* `is_number/1`
+..* `is_pid/1`
+..* `is_port/1`
+..* `is_reference/1`
+..* `is_tuple/1`
+* Más éstas funciones: 
+..*`abs(number)`
+..*`binary_part(binary, start, length)`
+..*`bit_size(bitstring)`
+..*`byte_size(bitstring)`
+..*`div(integer, integer)`
+..*`elem(tuple, n)`
+..*`hd(list)`
+..*`length(list)`
+..*`map_size(map)`
+..*`node()`
+..*`node(pid | ref | port)`
+..*`rem(integer, integer)`
+..*`round(number)`
+..*`self()`
+..*`tl(list)`
+..*`trunc(number)`
+..*`tuple_size(tuple)`
+
+Adicionalmente, los usuarios pueden definir sus propios guards. Por ejemplo, el módulo `Bitwise` define guards como funciones y operadores: `bnot`, `~~~`, `band`, `&&&`, `bor`, `|||`, `bxor`, `^^^`, `bsl`, `<<<`, `bsr`, `>>>>`.
+
+Nota que mientras que los operadores booleanos como `and`, `or`, `not` son permitidos en guards, los más generales y operadores de cortocircuito `&&`, `||`, y `!` no lo son.
+
+Ten en cuenta que los errores en los guards no se fugan, en cambio hacen el guard fallar:
+
+```
+iex> hd(1)
+** (ArgumentError) argument error
+    :erlang.hd(1)
+iex> case 1 do
+...>   x when hd(x) -> "No coincidirá"
+...>   x -> "Tengo #{x}"
+...> end
+"Tengo 1"
+```
+
+Si ningua de las cláusulas coincide, se produce un error:
+
+```
+iex> case :ok do
+...>   :error -> "No coincidirá"
+...> end
+** (CaseClauseError) no case clause matching: :ok
+```
+
+Nota que las funciones anónimas también pueden tener múltiples cláusulas y guards:
+
+```
+iex> f = fn
+...>   x, y when x > 0 -> x + y
+...>   x, y -> x * y
+...> end
+#Function<12.71889879/2 in :erl_eval.expr/5>
+iex> f.(1, 3)
+4
+iex> f.(-1, 3)
+-3
+```
+
+El número de argumentos en cada cláusula de una función anónima debe ser el mismo, de otra forma se produce un error.
+
+```
+iex> f2 = fn
+...>   x, y when x > 0 -> x + y
+...>   x, y, z -> x * y + z
+...> end
+** (CompileError) iex:1: cannot mix clauses with different arities in function definition
+```
+
+##`cond`
+
+`case` es útil cuando necesitas coincidir contra diferentes valores. Sin embargo, en muchas circunstancias, queremos checar diferentes condiciones y encontrar la primera que evalúa verdadero. En tales casos, podemos usar `cond`:
+
+```
+iex> cond do
+...>   2 + 2 == 5 ->
+...>     "Éste no evaluará verdadero"
+...>   2 * 2 == 3 ->
+...>     "Ni éste"
+...>   1 + 1 == 2 ->
+...>     "Pero éste sí lo hará"
+...> end
+"Pero éste sí lo hará"
+```
+
+Éste es equivalente a la cláusula `else if` en muchos lenguajes imperativos (aunque es usado con menos frecuencia aquí).
+
+Si ninguna de las condiciones regresa verdadero, un error (`CondClauseError`) se produce. Por ésta razón, puede ser necesario agregar una condición final, equivalente a `true`, la cual siempre coincidirá:
+
+```
+iex> cond do
+...>   2 + 2 == 5 ->
+...>     "Éste nunca es verdadero"
+...>   2 * 2 == 3 ->
+...>     "Ni éste"
+...>   true ->
+...>    "Éste siempre es verdadero (equivalente a else)"
+...> end
+"Éste siempre es verdadero (equivalente a else)"
+```
+
+Finalmente, nota que `cond` considera cualquier valor menos `nil` y `false` como verdadero:
+
+```
+iex> cond do
+...>   hd([1, 2, 3]) ->
+...>     "1 es considerado como verdadero"
+...> end
+"1 es considerado como verdadero"
+```
+
+##`if` y `unless`
+
+Aparte de `case` y `cond`, Elixir también provee los macros `if/2` y `unless/2` los cuales son útiles cuando necesitas checar sólo por una condición:
+
+```
+iex> if true do
+...>   "¡Éste funciona!"
+...> end
+"¡Éste funciona!"
+iex> unless true do
+...>   "Éste nunca será visto"
+...> end
+nil
+```
+
+Si la condición dada a `if/2` regresa `false` o `nil`, el código escrito entre `do/end` no es ejecutado, en cambio regresa `nil`. Sucede lo contrario con `unless/2`.
+
+También soportan bloques `else`:
+
+```
+iex> if nil do
+...>   "Éste nunca será visto"
+...> else
+...>   "Éste sí"
+...> end
+"Éste sí"
+```
+
+
