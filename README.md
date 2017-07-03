@@ -1,4 +1,4 @@
-#Introducción
+# Introducción
 ¡Bienvenido!
 
 En este tutorial vamos a enseñarte las bases de Elixir, la sintaxis del lenguaje, cómo definir módulos, cómo manipular las características de estructuras de datos comunes y más. Éste capítulo se enfocará en asegurar que Elixir esté instalado y de que puedas correr exitosamente el Shell Interactivo de Elixir, llamado IEx.
@@ -9,10 +9,10 @@ Nuestros requerimientos son:
 
 ¡Empecemos!
 
-##Instalación
+## Instalación
 Si aún no has instalado Elixir, corre a nuestra [página de instalación](https://github.com/alexmaguey). Una vez que termines, puedes correr `elixir -v` para obtener la versión de Elixir actual.
 
-##Modo interactivo
+## Modo interactivo
 
 Cuando instalas Elixir, tendrás tres ejecutables nuevos `iex`, `elixir` y `elixirc`. Si compilaste Elixir desde la fuente o estás usando una versión empaquetada, puedes encontrar estos dentro del directorio `bin`.
 
@@ -33,7 +33,7 @@ iex> "hola" <> " mundo"
 
 >Nota: si estas en Windows, también puedes intentar `iex.bat --werl` el cual puede proveer una mejor experiencia dependiendo de la consola que estés usando.
 
-##Corriendo scripts
+## Corriendo scripts
 
 Después de familiarizarnos con lo básico del lenguaje puede ser que quieras intentar escribir programas simples. Esto puede ser logrado poniendo el código siguiente en un archivo:
 
